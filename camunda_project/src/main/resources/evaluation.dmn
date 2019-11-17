@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_08a4u5g" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.4.1">
+  <decision id="evaluation" name="Tablero evaluación">
+    <extensionElements>
+      <biodi:bounds x="150" y="150" width="180" height="80" />
+      <biodi:edge source="InputData_0ohypvq">
+        <biodi:waypoints x="153" y="326" />
+        <biodi:waypoints x="214" y="230" />
+      </biodi:edge>
+      <biodi:edge source="InputData_0s9m4a4">
+        <biodi:waypoints x="314" y="326" />
+        <biodi:waypoints x="262" y="230" />
+      </biodi:edge>
+    </extensionElements>
+    <informationRequirement>
+      <requiredInput href="#InputData_0ohypvq" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#InputData_0s9m4a4" />
+    </informationRequirement>
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="Nivel de gravedad" camunda:inputVariable="importanceLevel">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+        <inputValues id="UnaryTests_0dn8wae">
+          <text>"importanceLevel_1","importanceLevel_2","importanceLevel_3","importanceLevel_4"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_16o02ar" label="Derivar a" camunda:inputVariable="referTo">
+        <inputExpression id="LiteralExpression_1bccny8" typeRef="string">
+          <text></text>
+        </inputExpression>
+        <inputValues id="UnaryTests_04ssh5p">
+          <text>"referTo_1","referTo_2"</text>
+        </inputValues>
+      </input>
+      <output id="output_1" label="Resultado de la evaluación" name="evaluationResult" typeRef="string">
+        <outputValues id="UnaryTests_04zj85m">
+          <text>"reportFamilyDoctor","underObservation","hospitalize"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_1c4ho3x">
+        <description>Es necesario el ingreso hospitalario.</description>
+        <inputEntry id="UnaryTests_0dvkpao">
+          <text>"importanceLevel_1","importanceLevel_2"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0rs3bgp">
+          <text>"referTo_1"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_157x3fn">
+          <text>"hospitalize"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1uch70t">
+        <description>Requiere entre 12 y 24 horas de observación antes de permitirle volver a casa o de hospitalizarle. Se le instala en la unidad de observación.</description>
+        <inputEntry id="UnaryTests_195abjl">
+          <text>"importanceLevel_3"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_18nrycr">
+          <text>"referTo_1"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0wnqq7x">
+          <text>"underObservation"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0u30gnl">
+        <description>Regresa a su domicilio y el médico de urgencias elabora un informe para su médico de cabecera.</description>
+        <inputEntry id="UnaryTests_0powmrw">
+          <text>"importanceLevel_3","importanceLevel_4"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ijktfu">
+          <text>"referTo_2"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0yaijmw">
+          <text>"reportFamilyDoctor"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_0ohypvq" name="importanceLevel">
+    <extensionElements>
+      <biodi:bounds x="75" y="326" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+  <inputData id="InputData_0s9m4a4" name="referTo">
+    <extensionElements>
+      <biodi:bounds x="263" y="326" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+</definitions>
