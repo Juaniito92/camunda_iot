@@ -38,10 +38,10 @@
         <bpmn:flowNodeRef>EndEvent_1a50j39</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1yet6fy" name="Admisión">
-        <bpmn:flowNodeRef>Task_1x4t5hu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0zdmd2e</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0hq2srn</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateThrowEvent_0hr53ho</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1x4t5hu</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:userTask id="Task_1vwf09e" name="Evaluación" camunda:candidateGroups="evaluation_group">
@@ -133,63 +133,6 @@
       <bpmn:incoming>SequenceFlow_0d2n3hz</bpmn:incoming>
       <bpmn:linkEventDefinition name="hospitalize_link" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:userTask id="Task_1x4t5hu" name="Admisión" camunda:candidateGroups="admision_group">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="firstname" label="Nombre" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="lastname" label="Apellidos" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="personalId" label="DNI" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-              <camunda:constraint name="minlength" config="9" />
-              <camunda:constraint name="maxlength" config="9" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="socialSecurityId" label="Nº Seguridad Social" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-              <camunda:constraint name="minlength" config="12" />
-              <camunda:constraint name="maxlength" config="12" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="description" label="Descripción" type="string">
-            <camunda:validation>
-              <camunda:constraint />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="mobilityAssistance" label="Requiere asistencia de movilidad" type="enum">
-            <camunda:value id="mobilityAssistance_1" name="Silla de ruedas" />
-            <camunda:value id="mobilityAssistance_2" name="Camilla" />
-          </camunda:formField>
-          <camunda:formField id="phone" label="Teléfono" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="admitDate" label="Fecha de ingreso" type="date">
-            <camunda:validation>
-              <camunda:constraint name="readonly" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="beaconUuid" label="Identificador beacon" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-              <camunda:constraint name="minlength" config="36" />
-              <camunda:constraint name="maxlength" config="36" />
-            </camunda:validation>
-          </camunda:formField>
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:outgoing>SequenceFlow_0s3buvq</bpmn:outgoing>
-    </bpmn:userTask>
     <bpmn:exclusiveGateway id="ExclusiveGateway_0zdmd2e" name="Requiere asistencia de movilidad" default="SequenceFlow_0fube99">
       <bpmn:incoming>SequenceFlow_0s3buvq</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1fzorlq</bpmn:outgoing>
@@ -288,7 +231,9 @@
     <bpmn:sequenceFlow id="SequenceFlow_1yxiutc" name="Alta" sourceRef="ExclusiveGateway_196n9oj" targetRef="Task_0d3p9cm">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${observationResult == 'observationResult_1'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_0d2n3hz" name="Hospitalización" sourceRef="ExclusiveGateway_196n9oj" targetRef="IntermediateThrowEvent_16exwt3" />
+    <bpmn:sequenceFlow id="SequenceFlow_0d2n3hz" name="Hospitalización" sourceRef="ExclusiveGateway_196n9oj" targetRef="IntermediateThrowEvent_16exwt3">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${observationResult == 'observationResult_2'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0q3ccod" name="Hospitalización" sourceRef="ExclusiveGateway_0fn68sx" targetRef="IntermediateThrowEvent_0unndr9" />
     <bpmn:sequenceFlow id="SequenceFlow_0s3buvq" sourceRef="Task_1x4t5hu" targetRef="ExclusiveGateway_0zdmd2e" />
     <bpmn:sequenceFlow id="SequenceFlow_0fube99" name="No" sourceRef="ExclusiveGateway_0zdmd2e" targetRef="ExclusiveGateway_0hq2srn" />
@@ -298,6 +243,63 @@
     <bpmn:sequenceFlow id="SequenceFlow_049x6sd" sourceRef="Task_0h8s3jd" targetRef="Task_1x54lsv" />
     <bpmn:sequenceFlow id="SequenceFlow_156r92c" sourceRef="Task_1x54lsv" targetRef="IntermediateThrowEvent_1281hu1" />
     <bpmn:sequenceFlow id="SequenceFlow_1y18y8o" sourceRef="IntermediateThrowEvent_1281hu1" targetRef="EndEvent_1a50j39" />
+    <bpmn:userTask id="Task_1x4t5hu" name="Admisión" camunda:candidateGroups="admision_group">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="firstname" label="Nombre" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="lastname" label="Apellidos" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="personalId" label="DNI" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+              <camunda:constraint name="minlength" config="9" />
+              <camunda:constraint name="maxlength" config="9" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="socialSecurityId" label="Nº Seguridad Social" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+              <camunda:constraint name="minlength" config="12" />
+              <camunda:constraint name="maxlength" config="12" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="description" label="Descripción" type="string">
+            <camunda:validation>
+              <camunda:constraint />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="mobilityAssistance" label="Requiere asistencia de movilidad" type="enum">
+            <camunda:value id="mobilityAssistance_1" name="Silla de ruedas" />
+            <camunda:value id="mobilityAssistance_2" name="Camilla" />
+          </camunda:formField>
+          <camunda:formField id="phone" label="Teléfono" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="admitDate" label="Fecha de ingreso" type="date">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="beaconUuid" label="Identificador beacon" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+              <camunda:constraint name="minlength" config="36" />
+              <camunda:constraint name="maxlength" config="36" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_0s3buvq</bpmn:outgoing>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmn:process id="patient_process" name="Patient process" isExecutable="true">
     <bpmn:startEvent id="StartEvent_0zk8vm3" name="Comienzo del proceso">
@@ -368,10 +370,12 @@
         <dc:Bounds x="190" y="760" width="2170" height="160" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_12vp7a9_di" bpmnElement="Task_1x4t5hu">
-        <dc:Bounds x="330" y="790" width="100" height="80" />
+        <dc:Bounds x="330" y="791" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0s3buvq_di" bpmnElement="SequenceFlow_0s3buvq">
-        <di:waypoint x="430" y="830" />
+        <di:waypoint x="430" y="831" />
+        <di:waypoint x="448" y="831" />
+        <di:waypoint x="448" y="830" />
         <di:waypoint x="465" y="830" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_1bws3zc_di" bpmnElement="Task_1vwf09e">
@@ -429,7 +433,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="MessageFlow_1hdu427_di" bpmnElement="MessageFlow_1hdu427">
         <di:waypoint x="380" y="178" />
-        <di:waypoint x="380" y="790" />
+        <di:waypoint x="380" y="791" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0c5j2a1_di" bpmnElement="SequenceFlow_0c5j2a1">
         <di:waypoint x="248" y="160" />
