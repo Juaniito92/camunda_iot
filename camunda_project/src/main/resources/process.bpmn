@@ -146,7 +146,7 @@
       <bpmn:outgoing>SequenceFlow_10sym0r</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_16jd1dt" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:userTask id="Task_1n0hs4h" name="Asignar silla/camilla" camunda:candidateUsers="ats">
+    <bpmn:userTask id="Task_1n0hs4h" name="Asignar silla/camilla" camunda:candidateGroups="ats">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="mobilityResourceId" label="Identificador del recurso" type="string">
@@ -273,21 +273,16 @@
             <camunda:validation>
               <camunda:constraint name="required" />
               <camunda:constraint name="minlength" config="9" />
-              <camunda:constraint name="maxlength" config="9" />
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="patientSocialSecurityId" label="Nº Seguridad Social" type="string">
             <camunda:validation>
               <camunda:constraint name="required" />
               <camunda:constraint name="minlength" config="12" />
-              <camunda:constraint name="maxlength" config="12" />
             </camunda:validation>
           </camunda:formField>
           <camunda:formField id="patientDescription" label="Descripción" type="string" />
-          <camunda:formField id="mobilityAssistance" label="Requiere asistencia de movilidad" type="enum">
-            <camunda:value id="mobilityAssistance_1" name="Silla de ruedas" />
-            <camunda:value id="mobilityAssistance_2" name="Camilla" />
-          </camunda:formField>
+          <camunda:formField id="mobilityAssistance" label="Requiere asistencia de movilidad" type="boolean" />
           <camunda:formField id="patientPhone" label="Teléfono" type="string">
             <camunda:validation>
               <camunda:constraint name="required" />
@@ -302,7 +297,6 @@
             <camunda:validation>
               <camunda:constraint name="required" />
               <camunda:constraint name="minlength" config="36" />
-              <camunda:constraint name="maxlength" config="36" />
             </camunda:validation>
           </camunda:formField>
         </camunda:formData>
