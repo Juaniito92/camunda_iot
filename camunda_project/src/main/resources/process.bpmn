@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.4.1">
   <bpmn:collaboration id="Collaboration_1jups4g">
-    <bpmn:participant id="Participant_06miy0e" name="Centro" processRef="medical_process" />
-    <bpmn:participant id="Participant_1l8e85o" name="Paciente" processRef="patient_process" />
-    <bpmn:messageFlow id="MessageFlow_1hdu427" sourceRef="IntermediateThrowEvent_161hvfm" targetRef="Task_1x4t5hu" />
+    <bpmn:participant id="Participant_06miy0e" name="Centro" processRef="medical_centre_process" />
+    <bpmn:participant id="Participant_1l8e85o" name="Paciente" processRef="medical_admission" />
+    <bpmn:messageFlow id="MessageFlow_1hdu427" sourceRef="IntermediateThrowEvent_161hvfm" targetRef="StartEvent_1orpb59" />
     <bpmn:messageFlow id="MessageFlow_18l9kdg" sourceRef="IntermediateThrowEvent_0e4s4k5" targetRef="IntermediateThrowEvent_1lby87y" />
     <bpmn:messageFlow id="MessageFlow_1qoxm44" sourceRef="IntermediateThrowEvent_0hr53ho" targetRef="IntermediateThrowEvent_1nhptoc" />
-    <bpmn:messageFlow id="MessageFlow_171ivgz" sourceRef="IntermediateThrowEvent_0gjiq0x" targetRef="Task_1vwf09e" />
+    <bpmn:messageFlow id="MessageFlow_171ivgz" sourceRef="IntermediateThrowEvent_0gjiq0x" targetRef="IntermediateThrowEvent_07b49fe" />
     <bpmn:messageFlow id="MessageFlow_0800qs7" sourceRef="IntermediateThrowEvent_1kyjy0w" targetRef="IntermediateThrowEvent_1066u7k" />
-    <bpmn:messageFlow id="MessageFlow_0zs9fl3" sourceRef="IntermediateThrowEvent_1rbaylj" targetRef="Task_0l2b9mm" />
+    <bpmn:messageFlow id="MessageFlow_0zs9fl3" sourceRef="IntermediateThrowEvent_1rbaylj" targetRef="IntermediateThrowEvent_10f001i" />
     <bpmn:messageFlow id="MessageFlow_11l1ezb" sourceRef="IntermediateThrowEvent_07j9xjg" targetRef="IntermediateThrowEvent_1281hu1" />
   </bpmn:collaboration>
-  <bpmn:process id="medical_process" name="Medical centre process" isExecutable="true">
+  <bpmn:process id="medical_centre_process" name="Medical centre" isExecutable="true" camunda:isStartableInTasklist="false">
     <bpmn:laneSet id="LaneSet_1yzf0ek">
       <bpmn:lane id="Lane_00z038z" name="Observación">
         <bpmn:flowNodeRef>Task_0l2b9mm</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_196n9oj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateThrowEvent_01u40mi</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateThrowEvent_16exwt3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IntermediateThrowEvent_10f001i</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0nqbmh0" name="Evaluación">
         <bpmn:flowNodeRef>Task_1vwf09e</bpmn:flowNodeRef>
@@ -27,27 +28,29 @@
         <bpmn:flowNodeRef>Task_0d3p9cm</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateThrowEvent_0unndr9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateThrowEvent_0e4s4k5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IntermediateThrowEvent_07b49fe</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0isczl6" name="ATS">
         <bpmn:flowNodeRef>Task_1n0hs4h</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>IntermediateThrowEvent_1573ddu</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0h8s3jd</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1ixa0np</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1x54lsv</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateThrowEvent_1281hu1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_1a50j39</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IntermediateThrowEvent_1573ddu</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1yet6fy" name="Admisión">
-        <bpmn:flowNodeRef>ExclusiveGateway_0zdmd2e</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>ExclusiveGateway_0hq2srn</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateThrowEvent_0hr53ho</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1x4t5hu</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_0zdmd2e</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_0hq2srn</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StartEvent_1orpb59</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:userTask id="Task_1vwf09e" name="Evaluación" camunda:candidateGroups="evaluation_group">
+    <bpmn:userTask id="Task_1vwf09e" name="Evaluación" camunda:candidateGroups="evaluation">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="importanceLevel" label="Nivel de gravedad" type="enum">
+          <camunda:formField id="evaluationImportanceLevel" label="Nivel de gravedad" type="enum">
             <camunda:validation>
               <camunda:constraint name="required" />
             </camunda:validation>
@@ -56,7 +59,7 @@
             <camunda:value id="importanceLevel_3" name="urgencia media" />
             <camunda:value id="importanceLevel_4" name="no urgente" />
           </camunda:formField>
-          <camunda:formField id="referTo" label="Derivar a" type="enum">
+          <camunda:formField id="evaluationReferTo" label="Derivar a" type="enum">
             <camunda:validation>
               <camunda:constraint name="required" />
             </camunda:validation>
@@ -66,9 +69,10 @@
         </camunda:formData>
         <camunda:taskListener expression="${execution.setVariable(&#39;evaluationAsignee&#39;, task.assignee)}" event="complete" />
       </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1l5kx05</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_068pgar</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:businessRuleTask id="Task_1a83sc1" name="Resultado de evaluación" camunda:decisionRef="evaluation">
+    <bpmn:businessRuleTask id="Task_1a83sc1" name="Resultado de evaluación" camunda:resultVariable="evaluationResult" camunda:decisionRef="evaluation" camunda:mapDecisionResult="singleResult">
       <bpmn:incoming>SequenceFlow_068pgar</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_17b9wj5</bpmn:outgoing>
     </bpmn:businessRuleTask>
@@ -80,23 +84,25 @@
     </bpmn:exclusiveGateway>
     <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_1kyjy0w" name="Movilidad a observación">
       <bpmn:incoming>SequenceFlow_1gr22sf</bpmn:incoming>
-      <bpmn:messageEventDefinition />
+      <bpmn:outgoing>SequenceFlow_0406u52</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_0gkioye" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:userTask id="Task_0l2b9mm" name="Observación" camunda:candidateGroups="observacion_group">
+    <bpmn:userTask id="Task_0l2b9mm" name="Observación" camunda:candidateGroups="observation">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="observationResult" label="Resultado de la observación" type="enum">
             <camunda:validation>
               <camunda:constraint name="required" />
             </camunda:validation>
-            <camunda:value id="observationResult_1" name="alta" />
-            <camunda:value id="observationResult_2" name="hospitalización" />
-            <camunda:value id="observationResult_3" name="observación" />
+            <camunda:value id="discharge" name="alta" />
+            <camunda:value id="hospitalize" name="hospitalización" />
+            <camunda:value id="underObservation" name="bajo observación" />
           </camunda:formField>
-          <camunda:formField id="analysis" label="Análisis" type="string" />
+          <camunda:formField id="observationAnalysis" label="Análisis" type="string" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0qvofyc</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0kr0uaf</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_086qx2v</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="ExclusiveGateway_196n9oj" name="Resultado de observación">
@@ -108,17 +114,19 @@
     <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_01u40mi">
       <bpmn:incoming>SequenceFlow_15iqtxt</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0qvofyc</bpmn:outgoing>
-      <bpmn:timerEventDefinition />
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">${observationTimer}</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:userTask id="Task_0d3p9cm" name="Generar informe" camunda:assignee="${execution.getVariable(&#39;evaluationAsignee&#39;)}">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="symptomDescription" label="Descripción de sintomas" type="string">
+          <camunda:formField id="evaluationDescription" label="Descripción de sintomas" type="string">
             <camunda:validation>
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="analysis" label="Análisis" type="string">
+          <camunda:formField id="observationAnalysis" label="Análisis" type="string">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
@@ -129,28 +137,19 @@
       <bpmn:incoming>SequenceFlow_1yxiutc</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1mys5gq</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_16exwt3">
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_16exwt3" name="hospitalize_link">
       <bpmn:incoming>SequenceFlow_0d2n3hz</bpmn:incoming>
       <bpmn:linkEventDefinition name="hospitalize_link" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:exclusiveGateway id="ExclusiveGateway_0zdmd2e" name="Requiere asistencia de movilidad" default="SequenceFlow_0fube99">
-      <bpmn:incoming>SequenceFlow_0s3buvq</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1fzorlq</bpmn:outgoing>
-      <bpmn:outgoing>SequenceFlow_0fube99</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:exclusiveGateway id="ExclusiveGateway_0hq2srn">
-      <bpmn:incoming>SequenceFlow_0fube99</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_14f2n2q</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_03epal7</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
     <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0hr53ho" name="Movilidad a evaluación">
       <bpmn:incoming>SequenceFlow_03epal7</bpmn:incoming>
-      <bpmn:messageEventDefinition />
+      <bpmn:outgoing>SequenceFlow_10sym0r</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_16jd1dt" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:userTask id="Task_1n0hs4h" name="Asignar silla/camilla" camunda:candidateUsers="ats_group">
+    <bpmn:userTask id="Task_1n0hs4h" name="Asignar silla/camilla" camunda:candidateUsers="ats">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="resourceId" label="Identificador del recurso" type="string">
+          <camunda:formField id="mobilityResourceId" label="Identificador del recurso" type="string">
             <camunda:validation>
               <camunda:constraint name="required" />
             </camunda:validation>
@@ -160,19 +159,15 @@
       <bpmn:incoming>SequenceFlow_1fzorlq</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_14f2n2q</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0unndr9">
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0unndr9" name="hospitalize_link">
       <bpmn:incoming>SequenceFlow_0q3ccod</bpmn:incoming>
       <bpmn:linkEventDefinition name="hospitalize_link" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0e4s4k5" name="Informe de alta">
-      <bpmn:incoming>SequenceFlow_1mys5gq</bpmn:incoming>
-      <bpmn:messageEventDefinition />
-    </bpmn:intermediateThrowEvent>
-    <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_1573ddu">
+    <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_1573ddu" name="hospitalize_link">
       <bpmn:outgoing>SequenceFlow_02bc2bx</bpmn:outgoing>
       <bpmn:linkEventDefinition name="hospitalize_link" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:userTask id="Task_0h8s3jd" name="Asignar habitación" camunda:candidateGroups="ats_group">
+    <bpmn:userTask id="Task_0h8s3jd" name="Asignar habitación" camunda:candidateGroups="ats">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="bedroomId" label="Identificador de habitación" type="string">
@@ -192,8 +187,24 @@
     </bpmn:userTask>
     <bpmn:serviceTask id="Task_1ixa0np" name="Comprobar habitaciones disponibles">
       <bpmn:extensionElements>
-        <camunda:executionListener class="" event="start" />
-        <camunda:executionListener class="" event="end" />
+        <camunda:executionListener class="org.us.etsii.camunda_iot.CheckRoomsListenerStart" event="start" />
+        <camunda:executionListener class="org.us.etsii.camunda_iot.CheckRoomsListenerEnd" event="end" />
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">${url}</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="content-type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">${checkRoomRequest}</camunda:inputParameter>
+            <camunda:outputParameter name="checkRoomResponse">
+              <camunda:script scriptFormat="Javascript">S(connector.getVariable("response"));</camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_02bc2bx</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_016kefg</bpmn:outgoing>
@@ -202,20 +213,20 @@
       <bpmn:incoming>SequenceFlow_049x6sd</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_156r92c</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_1281hu1">
+    <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_1281hu1" name="Llegada a habitación">
       <bpmn:incoming>SequenceFlow_156r92c</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1y18y8o</bpmn:outgoing>
-      <bpmn:messageEventDefinition />
+      <bpmn:messageEventDefinition messageRef="Message_1aj5ms9" />
     </bpmn:intermediateCatchEvent>
     <bpmn:endEvent id="EndEvent_1a50j39">
       <bpmn:incoming>SequenceFlow_1y18y8o</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0qvofyc" sourceRef="IntermediateThrowEvent_01u40mi" targetRef="Task_0l2b9mm" />
     <bpmn:sequenceFlow id="SequenceFlow_15iqtxt" name="Observación" sourceRef="ExclusiveGateway_196n9oj" targetRef="IntermediateThrowEvent_01u40mi">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${observationResult == 'observationResult_3'}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${observationResult == 'underObservation'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_086qx2v" sourceRef="Task_0l2b9mm" targetRef="ExclusiveGateway_196n9oj" />
-    <bpmn:sequenceFlow id="SequenceFlow_1gr22sf" name="Bajo &#10;observación&#10;" sourceRef="ExclusiveGateway_0fn68sx" targetRef="IntermediateThrowEvent_1kyjy0w">
+    <bpmn:sequenceFlow id="SequenceFlow_1gr22sf" name="Bajo observación&#10;" sourceRef="ExclusiveGateway_0fn68sx" targetRef="IntermediateThrowEvent_1kyjy0w">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${evaluationResult == 'underObservation'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0d7rpox" name="Informe para médico de cabecera" sourceRef="ExclusiveGateway_0fn68sx" targetRef="Task_0d3p9cm">
@@ -229,12 +240,14 @@
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1mys5gq" sourceRef="Task_0d3p9cm" targetRef="IntermediateThrowEvent_0e4s4k5" />
     <bpmn:sequenceFlow id="SequenceFlow_1yxiutc" name="Alta" sourceRef="ExclusiveGateway_196n9oj" targetRef="Task_0d3p9cm">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${observationResult == 'observationResult_1'}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${observationResult == 'discharge'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0d2n3hz" name="Hospitalización" sourceRef="ExclusiveGateway_196n9oj" targetRef="IntermediateThrowEvent_16exwt3">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${observationResult == 'observationResult_2'}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${observationResult == 'hopitalize'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_0q3ccod" name="Hospitalización" sourceRef="ExclusiveGateway_0fn68sx" targetRef="IntermediateThrowEvent_0unndr9" />
+    <bpmn:sequenceFlow id="SequenceFlow_0q3ccod" name="Hospitalización" sourceRef="ExclusiveGateway_0fn68sx" targetRef="IntermediateThrowEvent_0unndr9">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${evaluationResult == 'hospitalize'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0s3buvq" sourceRef="Task_1x4t5hu" targetRef="ExclusiveGateway_0zdmd2e" />
     <bpmn:sequenceFlow id="SequenceFlow_0fube99" name="No" sourceRef="ExclusiveGateway_0zdmd2e" targetRef="ExclusiveGateway_0hq2srn" />
     <bpmn:sequenceFlow id="SequenceFlow_03epal7" sourceRef="ExclusiveGateway_0hq2srn" targetRef="IntermediateThrowEvent_0hr53ho" />
@@ -243,48 +256,44 @@
     <bpmn:sequenceFlow id="SequenceFlow_049x6sd" sourceRef="Task_0h8s3jd" targetRef="Task_1x54lsv" />
     <bpmn:sequenceFlow id="SequenceFlow_156r92c" sourceRef="Task_1x54lsv" targetRef="IntermediateThrowEvent_1281hu1" />
     <bpmn:sequenceFlow id="SequenceFlow_1y18y8o" sourceRef="IntermediateThrowEvent_1281hu1" targetRef="EndEvent_1a50j39" />
-    <bpmn:userTask id="Task_1x4t5hu" name="Admisión" camunda:candidateGroups="admision_group">
+    <bpmn:userTask id="Task_1x4t5hu" name="Admisión" camunda:candidateGroups="admission">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="firstname" label="Nombre" type="string">
+          <camunda:formField id="patientFirstname" label="Nombre" type="string">
             <camunda:validation>
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="lastname" label="Apellidos" type="string">
+          <camunda:formField id="patientLastname" label="Apellidos" type="string">
             <camunda:validation>
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="personalId" label="DNI" type="string">
+          <camunda:formField id="patientPersonalId" label="DNI" type="string">
             <camunda:validation>
               <camunda:constraint name="required" />
               <camunda:constraint name="minlength" config="9" />
               <camunda:constraint name="maxlength" config="9" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="socialSecurityId" label="Nº Seguridad Social" type="string">
+          <camunda:formField id="patientSocialSecurityId" label="Nº Seguridad Social" type="string">
             <camunda:validation>
               <camunda:constraint name="required" />
               <camunda:constraint name="minlength" config="12" />
               <camunda:constraint name="maxlength" config="12" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="description" label="Descripción" type="string">
-            <camunda:validation>
-              <camunda:constraint />
-            </camunda:validation>
-          </camunda:formField>
+          <camunda:formField id="patientDescription" label="Descripción" type="string" />
           <camunda:formField id="mobilityAssistance" label="Requiere asistencia de movilidad" type="enum">
             <camunda:value id="mobilityAssistance_1" name="Silla de ruedas" />
             <camunda:value id="mobilityAssistance_2" name="Camilla" />
           </camunda:formField>
-          <camunda:formField id="phone" label="Teléfono" type="string">
+          <camunda:formField id="patientPhone" label="Teléfono" type="string">
             <camunda:validation>
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="admitDate" label="Fecha de ingreso" type="date">
+          <camunda:formField id="admitDate" label="Fecha de ingreso" type="string" defaultValue="${now()}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
@@ -298,54 +307,88 @@
           </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0k8vin0</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0s3buvq</bpmn:outgoing>
     </bpmn:userTask>
-  </bpmn:process>
-  <bpmn:process id="patient_process" name="Patient process" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_0zk8vm3" name="Comienzo del proceso">
-      <bpmn:outgoing>SequenceFlow_0c5j2a1</bpmn:outgoing>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0zdmd2e" name="Requiere asistencia de movilidad" default="SequenceFlow_0fube99">
+      <bpmn:incoming>SequenceFlow_0s3buvq</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1fzorlq</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0fube99</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0hq2srn">
+      <bpmn:incoming>SequenceFlow_0fube99</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_14f2n2q</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_03epal7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_0k8vin0" sourceRef="StartEvent_1orpb59" targetRef="Task_1x4t5hu" />
+    <bpmn:startEvent id="StartEvent_1orpb59" name="Llegada a admisión">
+      <bpmn:outgoing>SequenceFlow_0k8vin0</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_0aep6sl" />
     </bpmn:startEvent>
-    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_161hvfm" name="Llegada a admisión">
-      <bpmn:incoming>SequenceFlow_0c5j2a1</bpmn:incoming>
-      <bpmn:messageEventDefinition />
-    </bpmn:intermediateThrowEvent>
+    <bpmn:endEvent id="IntermediateThrowEvent_0e4s4k5" name="Informe de alta">
+      <bpmn:incoming>SequenceFlow_1mys5gq</bpmn:incoming>
+      <bpmn:messageEventDefinition messageRef="Message_0a8xh7y" />
+    </bpmn:endEvent>
+    <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_07b49fe" name="Llegada a evaluación">
+      <bpmn:incoming>SequenceFlow_10sym0r</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1l5kx05</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_0d6nw4l" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1l5kx05" sourceRef="IntermediateThrowEvent_07b49fe" targetRef="Task_1vwf09e" />
+    <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_10f001i" name="Llegada a observación">
+      <bpmn:incoming>SequenceFlow_0406u52</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0kr0uaf</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_1d5n7bf" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0kr0uaf" sourceRef="IntermediateThrowEvent_10f001i" targetRef="Task_0l2b9mm" />
+    <bpmn:sequenceFlow id="SequenceFlow_0406u52" sourceRef="IntermediateThrowEvent_1kyjy0w" targetRef="IntermediateThrowEvent_10f001i" />
+    <bpmn:sequenceFlow id="SequenceFlow_10sym0r" sourceRef="IntermediateThrowEvent_0hr53ho" targetRef="IntermediateThrowEvent_07b49fe" />
+  </bpmn:process>
+  <bpmn:process id="medical_admission" name="Medical admission" isExecutable="true">
     <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_1nhptoc" name="Movilidad a evaluación">
+      <bpmn:incoming>SequenceFlow_1htc0fp</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_18u4l9h</bpmn:outgoing>
-      <bpmn:messageEventDefinition />
+      <bpmn:messageEventDefinition messageRef="Message_16jd1dt" />
     </bpmn:intermediateCatchEvent>
     <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_0gfj196" name="Acceso a evaluación">
       <bpmn:incoming>SequenceFlow_18u4l9h</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1iv6slp</bpmn:outgoing>
-      <bpmn:signalEventDefinition />
+      <bpmn:signalEventDefinition signalRef="Signal_1xuxwk3" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0gjiq0x">
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0gjiq0x" name="Llegada a evaluación">
       <bpmn:incoming>SequenceFlow_1iv6slp</bpmn:incoming>
-      <bpmn:messageEventDefinition />
+      <bpmn:outgoing>SequenceFlow_1oebzvg</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_0d6nw4l" />
     </bpmn:intermediateThrowEvent>
     <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_1066u7k" name="Movilidad a observación">
+      <bpmn:incoming>SequenceFlow_1oebzvg</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_08hl9vg</bpmn:outgoing>
-      <bpmn:messageEventDefinition />
+      <bpmn:messageEventDefinition messageRef="Message_0gkioye" />
     </bpmn:intermediateCatchEvent>
     <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_1ps9v0f" name="Acceso a observación">
       <bpmn:incoming>SequenceFlow_08hl9vg</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_11wligi</bpmn:outgoing>
-      <bpmn:signalEventDefinition />
+      <bpmn:signalEventDefinition signalRef="Signal_0w7x5v1" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_1rbaylj">
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_1rbaylj" name="Llegada a observación">
       <bpmn:incoming>SequenceFlow_11wligi</bpmn:incoming>
-      <bpmn:messageEventDefinition />
+      <bpmn:outgoing>SequenceFlow_0i37rfh</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_1d5n7bf" />
     </bpmn:intermediateThrowEvent>
     <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_120kbtv" name="Acceso a habitación">
+      <bpmn:incoming>SequenceFlow_0i37rfh</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1bkmcy8</bpmn:outgoing>
-      <bpmn:signalEventDefinition />
+      <bpmn:signalEventDefinition signalRef="Signal_0lyil80" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_07j9xjg">
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_07j9xjg" name="Llegada a habitación">
       <bpmn:incoming>SequenceFlow_1bkmcy8</bpmn:incoming>
-      <bpmn:messageEventDefinition />
+      <bpmn:outgoing>SequenceFlow_050d6sp</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_1aj5ms9" />
     </bpmn:intermediateThrowEvent>
     <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_1lby87y" name="Informe de alta">
+      <bpmn:incoming>SequenceFlow_050d6sp</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0brssi2</bpmn:outgoing>
-      <bpmn:messageEventDefinition />
+      <bpmn:messageEventDefinition messageRef="Message_0a8xh7y" />
     </bpmn:intermediateCatchEvent>
     <bpmn:endEvent id="EndEvent_03ivjrk">
       <bpmn:incoming>SequenceFlow_0brssi2</bpmn:incoming>
@@ -354,48 +397,71 @@
     <bpmn:sequenceFlow id="SequenceFlow_08hl9vg" sourceRef="IntermediateThrowEvent_1066u7k" targetRef="IntermediateThrowEvent_1ps9v0f" />
     <bpmn:sequenceFlow id="SequenceFlow_1iv6slp" sourceRef="IntermediateThrowEvent_0gfj196" targetRef="IntermediateThrowEvent_0gjiq0x" />
     <bpmn:sequenceFlow id="SequenceFlow_18u4l9h" sourceRef="IntermediateThrowEvent_1nhptoc" targetRef="IntermediateThrowEvent_0gfj196" />
-    <bpmn:sequenceFlow id="SequenceFlow_0c5j2a1" sourceRef="StartEvent_0zk8vm3" targetRef="IntermediateThrowEvent_161hvfm" />
     <bpmn:sequenceFlow id="SequenceFlow_1bkmcy8" sourceRef="IntermediateThrowEvent_120kbtv" targetRef="IntermediateThrowEvent_07j9xjg" />
     <bpmn:sequenceFlow id="SequenceFlow_0brssi2" sourceRef="IntermediateThrowEvent_1lby87y" targetRef="EndEvent_03ivjrk" />
+    <bpmn:sequenceFlow id="SequenceFlow_1htc0fp" sourceRef="IntermediateThrowEvent_161hvfm" targetRef="IntermediateThrowEvent_1nhptoc" />
+    <bpmn:startEvent id="StartEvent_0zk8vm3" name="Comienzo del proceso">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="org.us.etsii.camunda_iot.StartEventListenerStart" event="start" />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_0c5j2a1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_161hvfm" name="Llegada a admisión">
+      <bpmn:incoming>SequenceFlow_0c5j2a1</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1htc0fp</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_0aep6sl" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;arriveAdmission_message&#34;).correlateWithResult()}" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0c5j2a1" sourceRef="StartEvent_0zk8vm3" targetRef="IntermediateThrowEvent_161hvfm" />
+    <bpmn:sequenceFlow id="SequenceFlow_1oebzvg" sourceRef="IntermediateThrowEvent_0gjiq0x" targetRef="IntermediateThrowEvent_1066u7k" />
+    <bpmn:sequenceFlow id="SequenceFlow_0i37rfh" sourceRef="IntermediateThrowEvent_1rbaylj" targetRef="IntermediateThrowEvent_120kbtv" />
+    <bpmn:sequenceFlow id="SequenceFlow_050d6sp" sourceRef="IntermediateThrowEvent_07j9xjg" targetRef="IntermediateThrowEvent_1lby87y" />
   </bpmn:process>
+  <bpmn:message id="Message_1aj5ms9" name="arriveBedroom_message" />
+  <bpmn:message id="Message_0aep6sl" name="arriveAdmission_message" />
+  <bpmn:message id="Message_16jd1dt" name="moveToEvalutaion_message" />
+  <bpmn:message id="Message_0d6nw4l" name="arriveEvaluation_message" />
+  <bpmn:message id="Message_0gkioye" name="moveToObservation_message" />
+  <bpmn:message id="Message_1d5n7bf" name="arriveObservation_message" />
+  <bpmn:message id="Message_0a8xh7y" name="deliverReport_message" />
+  <bpmn:signal id="Signal_1xuxwk3" name="accessEvaluation_signal" />
+  <bpmn:signal id="Signal_0w7x5v1" name="accessObservation_signal" />
+  <bpmn:signal id="Signal_0lyil80" name="accessBedroom_signal" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1jups4g">
       <bpmndi:BPMNShape id="Participant_06miy0e_di" bpmnElement="Participant_06miy0e" isHorizontal="true">
-        <dc:Bounds x="160" y="332" width="2200" height="728" />
+        <dc:Bounds x="147" y="332" width="2213" height="728" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0isczl6_di" bpmnElement="Lane_0isczl6" isHorizontal="true">
-        <dc:Bounds x="190" y="920" width="2170" height="140" />
+        <dc:Bounds x="177" y="920" width="2183" height="140" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1yet6fy_di" bpmnElement="Lane_1yet6fy" isHorizontal="true">
-        <dc:Bounds x="190" y="760" width="2170" height="160" />
+        <dc:Bounds x="177" y="760" width="2183" height="160" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_12vp7a9_di" bpmnElement="Task_1x4t5hu">
         <dc:Bounds x="330" y="791" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0s3buvq_di" bpmnElement="SequenceFlow_0s3buvq">
         <di:waypoint x="430" y="831" />
-        <di:waypoint x="448" y="831" />
-        <di:waypoint x="448" y="830" />
-        <di:waypoint x="465" y="830" />
+        <di:waypoint x="465" y="831" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_1bws3zc_di" bpmnElement="Task_1vwf09e">
         <dc:Bounds x="900" y="630" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0nqbmh0_di" bpmnElement="Lane_0nqbmh0" isHorizontal="true">
-        <dc:Bounds x="190" y="520" width="2170" height="240" />
+        <dc:Bounds x="177" y="520" width="2183" height="240" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_0zdmd2e_di" bpmnElement="ExclusiveGateway_0zdmd2e" isMarkerVisible="true">
-        <dc:Bounds x="465" y="805" width="50" height="50" />
+        <dc:Bounds x="465" y="806" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="457" y="768" width="65" height="40" />
+          <dc:Bounds x="457" y="769" width="65" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1fzorlq_di" bpmnElement="SequenceFlow_1fzorlq">
-        <di:waypoint x="490" y="855" />
+        <di:waypoint x="490" y="856" />
         <di:waypoint x="490" y="980" />
         <di:waypoint x="540" y="980" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="495" y="877" width="10" height="14" />
+          <dc:Bounds x="495" y="878" width="10" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_08aeo3c_di" bpmnElement="Task_1n0hs4h">
@@ -410,34 +476,36 @@
         <dc:Bounds x="655" y="805" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0fube99_di" bpmnElement="SequenceFlow_0fube99">
-        <di:waypoint x="515" y="830" />
-        <di:waypoint x="655" y="830" />
+        <di:waypoint x="515" y="831" />
+        <di:waypoint x="656" y="831" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="522" y="812" width="15" height="14" />
+          <dc:Bounds x="524" y="813" width="14" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_1l8e85o_di" bpmnElement="Participant_1l8e85o" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="2200" height="160" />
+        <dc:Bounds x="147" y="80" width="2213" height="160" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_0zk8vm3_di" bpmnElement="StartEvent_0zk8vm3">
-        <dc:Bounds x="212" y="142" width="36" height="36" />
+        <dc:Bounds x="212" y="132" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="196" y="185" width="68" height="27" />
+          <dc:Bounds x="197" y="175" width="67" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_0ndhufu_di" bpmnElement="IntermediateThrowEvent_161hvfm">
-        <dc:Bounds x="362" y="142" width="36" height="36" />
+        <dc:Bounds x="362" y="132" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="356" y="112" width="49" height="27" />
+          <dc:Bounds x="356" y="102" width="50" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="MessageFlow_1hdu427_di" bpmnElement="MessageFlow_1hdu427">
-        <di:waypoint x="380" y="178" />
-        <di:waypoint x="380" y="791" />
+        <di:waypoint x="380" y="168" />
+        <di:waypoint x="380" y="500" />
+        <di:waypoint x="260" y="500" />
+        <di:waypoint x="260" y="813" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0c5j2a1_di" bpmnElement="SequenceFlow_0c5j2a1">
-        <di:waypoint x="248" y="160" />
-        <di:waypoint x="362" y="160" />
+        <di:waypoint x="248" y="150" />
+        <di:waypoint x="362" y="150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_068pgar_di" bpmnElement="SequenceFlow_068pgar">
         <di:waypoint x="1000" y="670" />
@@ -449,7 +517,7 @@
       <bpmndi:BPMNShape id="ExclusiveGateway_0fn68sx_di" bpmnElement="ExclusiveGateway_0fn68sx" isMarkerVisible="true">
         <dc:Bounds x="1205" y="645" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1157" y="688" width="66" height="27" />
+          <dc:Bounds x="1158" y="688" width="65" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_17b9wj5_di" bpmnElement="SequenceFlow_17b9wj5">
@@ -466,7 +534,7 @@
         <di:waypoint x="1255" y="670" />
         <di:waypoint x="1690" y="670" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1594" y="620" width="63" height="40" />
+          <dc:Bounds x="1593" y="620" width="65" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_1tgn5sm_di" bpmnElement="Task_0d3p9cm">
@@ -477,15 +545,9 @@
         <di:waypoint x="2152" y="670" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="MessageFlow_18l9kdg_di" bpmnElement="MessageFlow_18l9kdg">
-        <di:waypoint x="2170" y="650" />
+        <di:waypoint x="2170" y="652" />
         <di:waypoint x="2170" y="168" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="IntermediateThrowEvent_1nz0h4i_di" bpmnElement="IntermediateThrowEvent_0e4s4k5">
-        <dc:Bounds x="2152" y="652" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2133" y="695" width="74" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_03ivjrk_di" bpmnElement="EndEvent_03ivjrk">
         <dc:Bounds x="2302" y="132" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -529,16 +591,21 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_1m7wk90_di" bpmnElement="IntermediateThrowEvent_0gjiq0x">
         <dc:Bounds x="932" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="924" y="102" width="53" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="MessageFlow_171ivgz_di" bpmnElement="MessageFlow_171ivgz">
         <di:waypoint x="950" y="168" />
-        <di:waypoint x="950" y="630" />
+        <di:waypoint x="950" y="410" />
+        <di:waypoint x="840" y="410" />
+        <di:waypoint x="840" y="652" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1gr22sf_di" bpmnElement="SequenceFlow_1gr22sf">
         <di:waypoint x="1230" y="645" />
         <di:waypoint x="1230" y="588" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1240" y="600" width="60" height="40" />
+          <dc:Bounds x="1237" y="600" width="85" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_0mrbgxq_di" bpmnElement="IntermediateThrowEvent_1kyjy0w">
@@ -573,13 +640,18 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_0gfktgv_di" bpmnElement="IntermediateThrowEvent_1rbaylj">
         <dc:Bounds x="1392" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1380" y="102" width="60" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_00z038z_di" bpmnElement="Lane_00z038z" isHorizontal="true">
-        <dc:Bounds x="190" y="332" width="2170" height="188" />
+        <dc:Bounds x="177" y="332" width="2183" height="188" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="MessageFlow_0zs9fl3_di" bpmnElement="MessageFlow_0zs9fl3">
         <di:waypoint x="1410" y="168" />
-        <di:waypoint x="1410" y="390" />
+        <di:waypoint x="1410" y="290" />
+        <di:waypoint x="1310" y="290" />
+        <di:waypoint x="1310" y="412" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_0qhtgps_di" bpmnElement="Task_0l2b9mm">
         <dc:Bounds x="1360" y="390" width="100" height="80" />
@@ -629,11 +701,14 @@
       <bpmndi:BPMNShape id="IntermediateThrowEvent_0jgvvc6_di" bpmnElement="IntermediateThrowEvent_16exwt3">
         <dc:Bounds x="1642" y="352" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1604" y="625" width="74" height="14" />
+          <dc:Bounds x="1632" y="395" width="76" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="IntermediateCatchEvent_07vy9mg_di" bpmnElement="IntermediateThrowEvent_1573ddu">
         <dc:Bounds x="1412" y="962" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1392" y="1005" width="76" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0q3ccod_di" bpmnElement="SequenceFlow_0q3ccod">
         <di:waypoint x="1230" y="695" />
@@ -645,6 +720,9 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_0bybnyz_di" bpmnElement="IntermediateThrowEvent_0unndr9">
         <dc:Bounds x="1362" y="702" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1352" y="745" width="76" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_02bc2bx_di" bpmnElement="SequenceFlow_02bc2bx">
         <di:waypoint x="1448" y="980" />
@@ -679,6 +757,9 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_0ys3zu5_di" bpmnElement="IntermediateThrowEvent_07j9xjg">
         <dc:Bounds x="1972" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1965" y="102" width="51" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_156r92c_di" bpmnElement="SequenceFlow_156r92c">
         <di:waypoint x="1910" y="980" />
@@ -686,6 +767,9 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="IntermediateCatchEvent_1vnzq6c_di" bpmnElement="IntermediateThrowEvent_1281hu1">
         <dc:Bounds x="1972" y="962" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1965" y="1005" width="51" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="MessageFlow_11l1ezb_di" bpmnElement="MessageFlow_11l1ezb">
         <di:waypoint x="1990" y="168" />
@@ -697,6 +781,70 @@
       <bpmndi:BPMNEdge id="SequenceFlow_1y18y8o_di" bpmnElement="SequenceFlow_1y18y8o">
         <di:waypoint x="2008" y="980" />
         <di:waypoint x="2272" y="980" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="StartEvent_07pbb03_di" bpmnElement="StartEvent_1orpb59">
+        <dc:Bounds x="242" y="813" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="235" y="856" width="50" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0k8vin0_di" bpmnElement="SequenceFlow_0k8vin0">
+        <di:waypoint x="278" y="831" />
+        <di:waypoint x="330" y="831" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0kwz20i_di" bpmnElement="IntermediateThrowEvent_0e4s4k5">
+        <dc:Bounds x="2152" y="652" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2132" y="695" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_1pyymlp_di" bpmnElement="IntermediateThrowEvent_07b49fe">
+        <dc:Bounds x="822" y="652" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="814" y="695" width="53" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1l5kx05_di" bpmnElement="SequenceFlow_1l5kx05">
+        <di:waypoint x="858" y="670" />
+        <di:waypoint x="900" y="670" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_1cn3xy5_di" bpmnElement="IntermediateThrowEvent_10f001i">
+        <dc:Bounds x="1292" y="412" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1281" y="455" width="60" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0kr0uaf_di" bpmnElement="SequenceFlow_0kr0uaf">
+        <di:waypoint x="1328" y="430" />
+        <di:waypoint x="1360" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1htc0fp_di" bpmnElement="SequenceFlow_1htc0fp">
+        <di:waypoint x="398" y="150" />
+        <di:waypoint x="752" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1oebzvg_di" bpmnElement="SequenceFlow_1oebzvg">
+        <di:waypoint x="968" y="150" />
+        <di:waypoint x="1212" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0i37rfh_di" bpmnElement="SequenceFlow_0i37rfh">
+        <di:waypoint x="1428" y="150" />
+        <di:waypoint x="1882" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_050d6sp_di" bpmnElement="SequenceFlow_050d6sp">
+        <di:waypoint x="2008" y="150" />
+        <di:waypoint x="2152" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0406u52_di" bpmnElement="SequenceFlow_0406u52">
+        <di:waypoint x="1248" y="570" />
+        <di:waypoint x="1270" y="570" />
+        <di:waypoint x="1270" y="430" />
+        <di:waypoint x="1292" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_10sym0r_di" bpmnElement="SequenceFlow_10sym0r">
+        <di:waypoint x="788" y="830" />
+        <di:waypoint x="805" y="830" />
+        <di:waypoint x="805" y="670" />
+        <di:waypoint x="822" y="670" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_08a4u5g" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.4.1">
-  <decision id="evaluation" name="Tablero evaluación">
+  <decision id="evaluation" name="Evaluation decision">
     <extensionElements>
       <biodi:bounds x="150" y="150" width="180" height="80" />
       <biodi:edge source="InputData_0ohypvq">
@@ -19,7 +19,7 @@
       <requiredInput href="#InputData_0s9m4a4" />
     </informationRequirement>
     <decisionTable id="decisionTable_1">
-      <input id="input_1" label="Nivel de gravedad" camunda:inputVariable="importanceLevel">
+      <input id="input_1" label="Nivel de gravedad" camunda:inputVariable="evaluationImportanceLevel">
         <inputExpression id="inputExpression_1" typeRef="string">
           <text></text>
         </inputExpression>
@@ -27,7 +27,7 @@
           <text>"importanceLevel_1","importanceLevel_2","importanceLevel_3","importanceLevel_4"</text>
         </inputValues>
       </input>
-      <input id="InputClause_16o02ar" label="Derivar a" camunda:inputVariable="referTo">
+      <input id="InputClause_16o02ar" label="Derivar a" camunda:inputVariable="evaluationReferTo">
         <inputExpression id="LiteralExpression_1bccny8" typeRef="string">
           <text></text>
         </inputExpression>
@@ -78,12 +78,12 @@
       </rule>
     </decisionTable>
   </decision>
-  <inputData id="InputData_0ohypvq" name="importanceLevel">
+  <inputData id="InputData_0ohypvq" name="evaluationImportanceLevel">
     <extensionElements>
       <biodi:bounds x="75" y="326" width="125" height="45" />
     </extensionElements>
   </inputData>
-  <inputData id="InputData_0s9m4a4" name="referTo">
+  <inputData id="InputData_0s9m4a4" name="evaluationReferTo">
     <extensionElements>
       <biodi:bounds x="263" y="326" width="125" height="45" />
     </extensionElements>
