@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserInfoActivity">
+
+    <TextView
+        android:id="@+id/textViewTitleUserInfoActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/informacion_del_usuario"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewLabelFirstName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/nombre"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitleUserInfoActivity" />
+
+    <TextView
+        android:id="@+id/textViewLabelLastName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/apellidos"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/textViewLabelFirstName"
+        app:layout_constraintStart_toStartOf="@+id/textViewLabelFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLabelFirstName" />
+
+    <TextView
+        android:id="@+id/textViewLabelPersonalId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/dni"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/textViewLabelLastName"
+        app:layout_constraintStart_toStartOf="@+id/textViewLabelLastName"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLabelLastName" />
+
+    <TextView
+        android:id="@+id/textViewLabelPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/telefono"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/textViewLabelPersonalId"
+        app:layout_constraintStart_toStartOf="@+id/textViewLabelPersonalId"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLabelPersonalId" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/buttonEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:contentDescription="@string/editar_informacion_del_usuario"
+        android:onClick="onClickListenerButtonEdit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <TextView
+        android:id="@+id/textViewValueFirstName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="86dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewLabelFirstName"
+        app:layout_constraintStart_toStartOf="@+id/textViewLabelFirstName"
+        app:layout_constraintTop_toTopOf="@+id/textViewLabelFirstName" />
+
+    <TextView
+        android:id="@+id/textViewValueLastName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="86dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewLabelLastName"
+        app:layout_constraintStart_toStartOf="@+id/textViewLabelLastName"
+        app:layout_constraintTop_toTopOf="@+id/textViewLabelLastName" />
+
+    <TextView
+        android:id="@+id/textViewValuePersonalId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="86dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewLabelPersonalId"
+        app:layout_constraintStart_toStartOf="@+id/textViewLabelPersonalId"
+        app:layout_constraintTop_toTopOf="@+id/textViewLabelPersonalId" />
+
+    <TextView
+        android:id="@+id/textViewValuePhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="86dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewLabelPhone"
+        app:layout_constraintStart_toStartOf="@+id/textViewLabelPhone"
+        app:layout_constraintTop_toTopOf="@+id/textViewLabelPhone" />
+
+</android.support.constraint.ConstraintLayout>

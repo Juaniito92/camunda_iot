@@ -1,77 +1,58 @@
 package com.estimote.proximity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.preference.PreferenceManager;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
-import android.widget.GridView;
-
-import com.estimote.mustard.rx_goodness.rx_requirements_wizard.Requirement;
-import com.estimote.mustard.rx_goodness.rx_requirements_wizard.RequirementsWizardFactory;
-import com.estimote.proximity.estimote.ProximityContentAdapter;
-import com.estimote.proximity.estimote.ProximityContentManager;
-
-import java.util.List;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function0;
-import kotlin.jvm.functions.Function1;
+import android.view.View;
+import android.widget.Toast;
 
 //
 // Running into any issues? Drop us an email to: contact@estimote.com
 //
 
-public class MainActivity extends AppCompatActivity {
-
-    private ProximityContentManager proximityContentManager;
-    private ProximityContentAdapter proximityContentAdapter;
+public class MainActivity extends AbstractActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreateContinuation() {
         setContentView(R.layout.activity_main);
+        bindLayoutElements(R.id.editTextFirstName, R.id.editTextLastName, R.id.editTextPersonalId, R.id.editTextPhone);
 
-        proximityContentAdapter = new ProximityContentAdapter(this);
-        GridView gridView = findViewById(R.id.gridView);
-        gridView.setAdapter(proximityContentAdapter);
-
-
-        RequirementsWizardFactory
-                .createEstimoteRequirementsWizard()
-                .fulfillRequirements(this,
-                        new Function0<Unit>() {
-                            @Override
-                            public Unit invoke() {
-                                Log.d("app", "requirements fulfilled");
-                                startProximityContentManager();
-                                return null;
-                            }
-                        },
-                        new Function1<List<? extends Requirement>, Unit>() {
-                            @Override
-                            public Unit invoke(List<? extends Requirement> requirements) {
-                                Log.e("app", "requirements missing: " + requirements);
-                                return null;
-                            }
-                        },
-                        new Function1<Throwable, Unit>() {
-                            @Override
-                            public Unit invoke(Throwable throwable) {
-                                Log.e("app", "requirements error: " + throwable);
-                                return null;
-                            }
-                        });
+        if(extraActionValue == null && !sharedPreferences.getAll().isEmpty()){
+            navigateToUserInfoActivity();
+        }
     }
 
-    private void startProximityContentManager() {
-        proximityContentManager = new ProximityContentManager(this, proximityContentAdapter, ((MyApplication) getApplication()).cloudCredentials);
-        proximityContentManager.start();
+    public void onClickListenerButtonSave(View view) {
+        String etFirstName = firstName.getText().toString().trim();
+        String etLastName = lastName.getText().toString().trim();
+        String etPersonalId = personalId.getText().toString().trim();
+        String etPhone = phone.getText().toString().trim();
+        if (!etFirstName.isEmpty() && !etLastName.isEmpty() && !etPersonalId.isEmpty() && !etPhone.isEmpty()) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("firstName", etFirstName);
+            editor.putString("lastName", etLastName);
+            editor.putString("personalId", etPersonalId);
+            editor.putString("phone", etPhone);
+            editor.putString("nextCamundaSignal", MyApplication.CAMUNDA_SIGNALS[0]);
+            editor.commit();
+            Log.i(this.getClass().getSimpleName(), "SHARED PREFERENCES SAVED:\n" + sharedPreferences.getString("firstName", "") + "\n" + sharedPreferences.getString("lastName", "") + "\n" + sharedPreferences.getString("personalId", "") + "\n" + sharedPreferences.getString("phone", ""));
+            navigateToUserInfoActivity();
+        } else {
+            Toast.makeText(MainActivity.this, "Rellene todos los campos", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (proximityContentManager != null)
-            proximityContentManager.stop();
+    private void navigateToUserInfoActivity() {
+        if(extraActionValue == "EDIT"){
+            finish();
+        } else {
+            Intent userInfoActivityIntent = new Intent(this, UserInfoActivity.class);
+            userInfoActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(userInfoActivityIntent);
+        }
     }
 
 }

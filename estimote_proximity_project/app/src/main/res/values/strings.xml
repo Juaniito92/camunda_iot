@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">ProximityContent</string>
+    <string name="formulario_de_registro">Formulario de registro</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="telefono">Teléfono</string>
+    <string name="guardar">Guardar</string>
+    <string name="dni">DNI</string>
+    <string name="informacion_del_usuario">Información del usuario</string>
+    <string name="editar_informacion_del_usuario">Editar información del usuario</string>
 </resources>
