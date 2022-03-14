@@ -14,7 +14,7 @@ public class MyApplication extends Application {
     public EstimoteCloudCredentials cloudCredentials = new EstimoteCloudCredentials("camunda-iot-06e", "0cde12bfdb74d25c5bb590470a49a215");
 
     // TODO: Set Camunda properties
-    public static final String CAMUNDA_REST_API_HOST = "http://192.168.1.146:8080/engine-rest/";
+    public static final String CAMUNDA_REST_API_HOST = "http://192.168.1.40:8080/engine-rest/";
     public static final String CAMUNDA_PROCESS_DEFINITION_KEY = "medical_admission";
     public static final String CAMUNDA_PATIENT_PERSONAL_ID_VARIABLE_NAME = "patientPersonalId";
     public static final String[] CAMUNDA_SIGNALS = {"accessEvaluation_signal", "accessObservation_signal"};

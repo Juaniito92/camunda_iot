@@ -3,6 +3,8 @@ package services;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -24,13 +26,15 @@ import model.volley.MyJsonArrayRequest;
 public class CamundaService {
 
     private VolleyService volleyService;
+    private SharedPreferences sharedPreferences;
 
     public CamundaService(UserInfoActivity activity){
         super();
         this.volleyService = activity.volleyService;
+        this.sharedPreferences = activity.sharedPreferences;
     }
 
-    public void checkExecutionIdAndThrowSignalEvent(SharedPreferences sharedPreferences) {
+    public void checkExecutionIdAndThrowSignalEvent() {
         // Camunda list executions request (https://docs.camunda.org/manual/7.14/reference/rest/execution/post-query/)
         MyJsonArrayRequest request = new MyJsonArrayRequest(Request.Method.POST, MyApplication.CAMUNDA_REST_API_HOST + "execution", getExecutionBodyRequest(sharedPreferences.getString("personalId", ""), sharedPreferences.getString("nextCamundaSignal", "")),
                 new Response.Listener<JSONArray>() {
@@ -38,9 +42,11 @@ public class CamundaService {
                     public void onResponse(JSONArray response) {
                         // Get execution id
                         try {
-                            String executionId = response.getJSONObject(0).getString("id");
-                            Log.i(this.getClass().getSimpleName(), String.format("Execution id found: %s", executionId));
-                            throwSignalEvent(executionId, sharedPreferences);
+                            if(response.length() > 0){
+                                String executionId = response.getJSONObject(0).getString("id");
+                                Log.i(this.getClass().getSimpleName(), String.format("Execution id found: %s", executionId));
+                                throwSignalEvent(executionId);
+                            }
                         } catch (JSONException e) {
                             Log.e(this.getClass().getSimpleName(), e.getLocalizedMessage(), e);
                         }
@@ -72,7 +78,7 @@ public class CamundaService {
         return new JSONObject(jsonBodyMap);
     }
 
-    private void throwSignalEvent(String executionId, SharedPreferences sharedPreferences) {
+    private void throwSignalEvent(String executionId) {
         // Camunda throw signal event request (https://docs.camunda.org/manual/7.14/reference/rest/signal/post-signal/)
         MyJsonArrayRequest request = new MyJsonArrayRequest(Request.Method.POST, MyApplication.CAMUNDA_REST_API_HOST + "signal", throwSignalEventBodyRequest(executionId, sharedPreferences.getString("nextCamundaSignal", "")),
                 new Response.Listener<JSONArray>() {
@@ -80,7 +86,7 @@ public class CamundaService {
                     public void onResponse(JSONArray response) {
                         // Not content from request
                         Log.i(this.getClass().getSimpleName(), String.format("Camunda signal event %s for executionId %s", sharedPreferences.getString("nextCamundaSignal", ""), executionId));
-                        setNextCamundaSignalOnSharedPreferences(sharedPreferences);
+                        setNextCamundaSignalOnSharedPreferences();
                     }
                 },
                 new Response.ErrorListener() {
@@ -102,7 +108,7 @@ public class CamundaService {
         return new JSONObject(jsonBodyMap);
     }
 
-    private void setNextCamundaSignalOnSharedPreferences(SharedPreferences sharedPreferences) {
+    private void setNextCamundaSignalOnSharedPreferences() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         int nextCamundaSignalIndex = Arrays.asList(MyApplication.CAMUNDA_SIGNALS).indexOf(sharedPreferences.getString("nextCamundaSignal", "")) + 1;
         editor.putString("nextCamundaSignal", MyApplication.CAMUNDA_SIGNALS.length > nextCamundaSignalIndex ? MyApplication.CAMUNDA_SIGNALS[nextCamundaSignalIndex] : MyApplication.CAMUNDA_SIGNALS[0]);

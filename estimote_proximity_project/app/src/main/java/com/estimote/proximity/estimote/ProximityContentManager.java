@@ -44,34 +44,28 @@ public class ProximityContentManager {
         this.camundaService = new CamundaService(activity);
     }
 
-    public void start(SharedPreferences sharedPreferences) {
+    public void start() {
 
             // TODO: Create the Proximity Observer
             proximityObserver = new ProximityObserverBuilder(context, cloudCredentials)
-                    .onError(new Function1<Throwable, Unit>() {
-                        @Override
-                        public Unit invoke(Throwable throwable) {
-                            Log.e("app", "proximity observer error: " + throwable);
-                            return null;
-                        }
-                    })
                     .withBalancedPowerMode()
+                    .onError(throwable -> {
+                        Log.e("app", "proximity observer error: " + throwable);
+                        return null;
+                    })
                     .build();
 
             //TODO: Create the Proximity Zone
             ProximityZone zone = new ProximityZoneBuilder()
                     .forTag("camunda-iot-06e")
                     .inCustomRange(3.0)
-                    .onContextChange(new Function1<Set<? extends ProximityZoneContext>, Unit>() {
-                        @Override
-                        public Unit invoke(Set<? extends ProximityZoneContext> contexts) {
+                    .onContextChange(contexts -> {
+                        Log.i(ProximityContentManager.class.getSimpleName(), "CONTEXT CHANGE DETECTED");
+                        List<ProximityContent> nearbyContent = new ArrayList<>(contexts.size());
 
-                            List<ProximityContent> nearbyContent = new ArrayList<>(contexts.size());
+                        for (ProximityZoneContext proximityContext : contexts) {
 
-                            for (ProximityZoneContext proximityContext : contexts) {
-
-                                camundaService.checkExecutionIdAndThrowSignalEvent(sharedPreferences);
-
+                            camundaService.checkExecutionIdAndThrowSignalEvent();
 
 //                                String title = proximityContext.getAttachments().get("camunda-iot-06e/title");
 //                                if (title == null) {
@@ -81,13 +75,12 @@ public class ProximityContentManager {
 //                                Log.d("app", "Context changed: Title = " + title + ", Subtitle = " + subtitle);
 //
 //                                nearbyContent.add(new ProximityContent(title, subtitle));
-                            }
-
-                            proximityContentAdapter.setNearbyContent(nearbyContent);
-                            proximityContentAdapter.notifyDataSetChanged();
-
-                            return null;
                         }
+
+                        proximityContentAdapter.setNearbyContent(nearbyContent);
+                        proximityContentAdapter.notifyDataSetChanged();
+
+                        return null;
                     })
                     .build();
 

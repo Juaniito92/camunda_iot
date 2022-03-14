@@ -8,7 +8,7 @@ import org.camunda.bpm.engine.ProcessEngine;
 /**
  * Process Application exposing this application's resources the process engine.
  */
-@ProcessApplication(value = "medical_admission_deployment")
+@ProcessApplication("medical_admission_deployment")
 public class CamundaBpmProcessApplication extends ServletProcessApplication {
 
     private static final String PROCESS_DEFINITION_KEY = "medical_admission";
