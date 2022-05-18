@@ -38,7 +38,7 @@ public class MainActivity extends AbstractActivity {
             editor.putString(SharedPreferencesKeys.PERSONAL_ID.name(), etPersonalId);
             editor.putString(SharedPreferencesKeys.PHONE.name(), etPhone);
             editor.putString(SharedPreferencesKeys.NEXT_CAMUNDA_SIGNAL.name(), MyApplication.CAMUNDA_SIGNALS[0]);
-            editor.commit();
+            editor.apply();
             Log.i(this.getClass().getSimpleName(), "SHARED PREFERENCES SAVED:\n"
                     + sharedPreferences.getString(SharedPreferencesKeys.FIRSTNAME.name(), "") + "\n"
                     + sharedPreferences.getString(SharedPreferencesKeys.LASTNAME.name(), "") + "\n"

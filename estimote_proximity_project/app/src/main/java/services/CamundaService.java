@@ -3,8 +3,6 @@ package services;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -21,22 +19,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.SharedPreferencesKeys;
 import model.volley.MyJsonArrayRequest;
 
 public class CamundaService {
 
-    private VolleyService volleyService;
-    private SharedPreferences sharedPreferences;
+    private final UserInfoActivity userInfoActivity;
 
-    public CamundaService(UserInfoActivity activity){
+    public CamundaService(UserInfoActivity userInfoActivity){
         super();
-        this.volleyService = activity.volleyService;
-        this.sharedPreferences = activity.sharedPreferences;
+        this.userInfoActivity = userInfoActivity;
     }
 
     public void checkExecutionIdAndThrowSignalEvent() {
         // Camunda list executions request (https://docs.camunda.org/manual/7.14/reference/rest/execution/post-query/)
-        MyJsonArrayRequest request = new MyJsonArrayRequest(Request.Method.POST, MyApplication.CAMUNDA_REST_API_HOST + "execution", getExecutionBodyRequest(sharedPreferences.getString("personalId", ""), sharedPreferences.getString("nextCamundaSignal", "")),
+        MyJsonArrayRequest request = new MyJsonArrayRequest(
+                Request.Method.POST,
+                MyApplication.CAMUNDA_REST_API_HOST + "execution",
+                getExecutionBodyRequest(
+                        userInfoActivity.sharedPreferences.getString(SharedPreferencesKeys.PERSONAL_ID.name(), ""),
+                        userInfoActivity.sharedPreferences.getString(SharedPreferencesKeys.NEXT_CAMUNDA_SIGNAL.name(), "")
+                ),
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -56,12 +59,18 @@ public class CamundaService {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e(this.getClass().getSimpleName(), error.getLocalizedMessage(), error);
-                        Log.e(this.getClass().getSimpleName(), String.format("Doesn't exist any process instance with %s = %s and signal = %s", MyApplication.CAMUNDA_PATIENT_PERSONAL_ID_VARIABLE_NAME, sharedPreferences.getString("personalId", ""), sharedPreferences.getString("nextCamundaSignal", "")));
+                        Log.e(
+                                this.getClass().getSimpleName(),
+                                String.format("Doesn't exist any process instance with %s = %s and signal = %s",
+                                        MyApplication.CAMUNDA_PATIENT_PERSONAL_ID_VARIABLE_NAME,
+                                        userInfoActivity.sharedPreferences.getString(SharedPreferencesKeys.PERSONAL_ID.name(), ""),
+                                        userInfoActivity.sharedPreferences.getString(SharedPreferencesKeys.NEXT_CAMUNDA_SIGNAL.name(), ""))
+                        );
                     }
                 }
         );
         // Add the request to the RequestQueue
-        volleyService.addToRequestQueue(request);
+        userInfoActivity.volleyService.addToRequestQueue(request);
     }
 
     private JSONObject getExecutionBodyRequest(String patientPersonalId, String camundaSignal) {
@@ -80,12 +89,23 @@ public class CamundaService {
 
     private void throwSignalEvent(String executionId) {
         // Camunda throw signal event request (https://docs.camunda.org/manual/7.14/reference/rest/signal/post-signal/)
-        MyJsonArrayRequest request = new MyJsonArrayRequest(Request.Method.POST, MyApplication.CAMUNDA_REST_API_HOST + "signal", throwSignalEventBodyRequest(executionId, sharedPreferences.getString("nextCamundaSignal", "")),
+        MyJsonArrayRequest request = new MyJsonArrayRequest(
+                Request.Method.POST,
+                MyApplication.CAMUNDA_REST_API_HOST + "signal",
+                throwSignalEventBodyRequest(
+                        executionId,
+                        userInfoActivity.sharedPreferences.getString(SharedPreferencesKeys.NEXT_CAMUNDA_SIGNAL.name(), "")
+                ),
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         // Not content from request
-                        Log.i(this.getClass().getSimpleName(), String.format("Camunda signal event %s for executionId %s", sharedPreferences.getString("nextCamundaSignal", ""), executionId));
+                        Log.i(
+                                this.getClass().getSimpleName(),
+                                String.format("Camunda signal event %s for executionId %s",
+                                        userInfoActivity.sharedPreferences.getString(SharedPreferencesKeys.NEXT_CAMUNDA_SIGNAL.name(), ""),
+                                        executionId)
+                        );
                         setNextCamundaSignalOnSharedPreferences();
                     }
                 },
@@ -93,12 +113,18 @@ public class CamundaService {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e(this.getClass().getSimpleName(), error.getLocalizedMessage(), error);
-                        Log.e(this.getClass().getSimpleName(), String.format("Can not throw signal event for executionId = %s and signal = %s", executionId, sharedPreferences.getString("nextCamundaSignal", "")));
+                        Log.e(
+                                this.getClass().getSimpleName(),
+                                String.format("Can not throw signal event for executionId = %s and signal = %s",
+                                        executionId,
+                                        userInfoActivity.sharedPreferences.getString(SharedPreferencesKeys.NEXT_CAMUNDA_SIGNAL.name(), "")
+                                )
+                        );
                     }
                 }
         );
         // Add the request to the RequestQueue
-        volleyService.addToRequestQueue(request);
+        userInfoActivity.volleyService.addToRequestQueue(request);
     }
 
     private JSONObject throwSignalEventBodyRequest(String executionId, String camundaSignal) {
@@ -109,9 +135,13 @@ public class CamundaService {
     }
 
     private void setNextCamundaSignalOnSharedPreferences() {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        int nextCamundaSignalIndex = Arrays.asList(MyApplication.CAMUNDA_SIGNALS).indexOf(sharedPreferences.getString("nextCamundaSignal", "")) + 1;
-        editor.putString("nextCamundaSignal", MyApplication.CAMUNDA_SIGNALS.length > nextCamundaSignalIndex ? MyApplication.CAMUNDA_SIGNALS[nextCamundaSignalIndex] : MyApplication.CAMUNDA_SIGNALS[0]);
-        editor.commit();
+        SharedPreferences.Editor editor = userInfoActivity.sharedPreferences.edit();
+        int nextCamundaSignalIndex = Arrays.asList(MyApplication.CAMUNDA_SIGNALS).indexOf(userInfoActivity.sharedPreferences.getString(SharedPreferencesKeys.NEXT_CAMUNDA_SIGNAL.name(), "")) + 1;
+        editor.putString(
+                SharedPreferencesKeys.NEXT_CAMUNDA_SIGNAL.name(),
+                MyApplication.CAMUNDA_SIGNALS.length > nextCamundaSignalIndex ? MyApplication.CAMUNDA_SIGNALS[nextCamundaSignalIndex] : MyApplication.CAMUNDA_SIGNALS[0]
+        );
+        editor.apply();
+        userInfoActivity.setPreferenceValues();
     }
 }

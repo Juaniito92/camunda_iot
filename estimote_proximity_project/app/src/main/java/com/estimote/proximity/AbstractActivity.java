@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
     // TODO: Object to store preferences
     public SharedPreferences sharedPreferences;
     protected TextView firstName, lastName, personalId, phone, nextCamundaSignal;
+    protected ActivityResultLauncher<Intent> activityResultLaunch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
         }
     }
 
-    protected void setPreferenceValues() {
+    public void setPreferenceValues() {
         firstName.setText(sharedPreferences.getString(SharedPreferencesKeys.FIRSTNAME.name(), ""));
         lastName.setText(sharedPreferences.getString(SharedPreferencesKeys.LASTNAME.name(), ""));
         personalId.setText(sharedPreferences.getString(SharedPreferencesKeys.PERSONAL_ID.name(), ""));

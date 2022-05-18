@@ -21,11 +21,15 @@ public class MyJsonArrayRequest extends JsonRequest<JSONArray> {
 
     @Override
     protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
+        Response<JSONArray> result = Response.success(null, null);
         try {
-            String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
-            return Response.success(new JSONArray(jsonString), HttpHeaderParser.parseCacheHeaders(response));
+            if(response != null && response.data.length != 0){
+                String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
+                result = Response.success(new JSONArray(jsonString), HttpHeaderParser.parseCacheHeaders(response));
+            }
         } catch (UnsupportedEncodingException | JSONException e) {
-            return Response.error(new ParseError(e));
+            result = Response.error(new ParseError(e));
         }
+        return result;
     }
 }
