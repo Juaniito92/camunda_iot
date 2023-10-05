@@ -1,4 +1,4 @@
-package util;
+package org.us.etsii.camunda.utils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

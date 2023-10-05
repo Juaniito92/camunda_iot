@@ -60,24 +60,7 @@ public class ProximityContentManager {
                     .inCustomRange(0.5)
                     .onContextChange(contexts -> {
                         Log.i(ProximityContentManager.class.getSimpleName(), "CONTEXT CHANGE DETECTED");
-                        List<ProximityContent> nearbyContent = new ArrayList<>(contexts.size());
                         camundaService.checkExecutionIdAndThrowSignalEvent();
-                        /*
-                        for (ProximityZoneContext proximityContext : contexts) {
-                                String title = proximityContext.getAttachments().get("camunda-iot-06e/title");
-                                if (title == null) {
-                                    title = "unknown";
-                                }
-                                String subtitle = Utils.getShortIdentifier(proximityContext.getDeviceId());
-                                Log.d("app", "Context changed: Title = " + title + ", Subtitle = " + subtitle);
-
-                                nearbyContent.add(new ProximityContent(title, subtitle));
-                        }
-                        */
-
-                        proximityContentAdapter.setNearbyContent(nearbyContent);
-                        proximityContentAdapter.notifyDataSetChanged();
-
                         return null;
                     })
                     .build();

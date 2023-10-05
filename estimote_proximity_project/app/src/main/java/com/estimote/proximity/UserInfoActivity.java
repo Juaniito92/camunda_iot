@@ -99,6 +99,11 @@ public class UserInfoActivity extends AbstractActivity {
         }
     }
 
+    private void startProximityContentManager() {
+        proximityContentManager = new ProximityContentManager(this);
+        proximityContentManager.start();
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(
@@ -127,11 +132,6 @@ public class UserInfoActivity extends AbstractActivity {
         }
         // Other 'case' lines to check for other
         // permissions this app might request.
-    }
-
-    private void startProximityContentManager() {
-        proximityContentManager = new ProximityContentManager(this);
-        proximityContentManager.start();
     }
 
     public void onClickListenerButtonEdit(View view) {

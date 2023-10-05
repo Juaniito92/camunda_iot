@@ -1,7 +1,6 @@
-package org.us.etsii.camunda_iot;
+package org.us.etsii.camunda;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.us.etsii.bpm.engine.delegate.CustomJavaDelegate;
 
 public class CheckRoomsListenerEnd extends CustomJavaDelegate {
 

@@ -1,15 +1,12 @@
-package org.us.etsii.bpm.engine.delegate;
+package org.us.etsii.camunda;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import services.StorageService;
-import util.VariableNames;
+import org.us.etsii.camunda.services.StorageService;
 
 public abstract class CustomJavaDelegate implements JavaDelegate {
 
@@ -21,7 +18,6 @@ public abstract class CustomJavaDelegate implements JavaDelegate {
     public void execute(DelegateExecution execution) throws Exception {
         try {
             this.stgService = new StorageService();
-            this.pushTaskToHistory(execution);
             this.customExecute(execution);
         } catch (Exception e) {
             LOGGER.info("\n\n  ... LoggerDelegate invoked by processDefinitionId=" + execution.getProcessDefinitionId()
@@ -30,7 +26,6 @@ public abstract class CustomJavaDelegate implements JavaDelegate {
                     + ",\n processInstanceId=" + execution.getProcessInstanceId()
                     + ",\n businessKey=" + execution.getProcessBusinessKey()
                     + ",\n executionId=" + execution.getId()
-                    + ",\n executionHistory=" + getTaskHistory(execution)
                     + ",\n exception=" + ExceptionUtils.getStackTrace(e)
                     + "\n\n");
             String errorMessage = StringUtils.substring(ExceptionUtils.getStackTrace(e), 0, 3999).replace("\n", ",").replace("\r", "");
@@ -40,23 +35,5 @@ public abstract class CustomJavaDelegate implements JavaDelegate {
 
     protected abstract void customExecute(DelegateExecution execution) throws Exception;
 
-    private void pushTaskToHistory(DelegateExecution execution) {
-        List<String> item = getTaskHistory(execution);
-        item.add("{" + execution.getCurrentActivityName() + ", " + this.getClass().getSimpleName() + "}");
-        saveTaskHistory(execution, item);
-    }
-
-    @SuppressWarnings("unchecked")
-    private List<String> getTaskHistory(DelegateExecution execution) {
-        List<String> o = (List<String>) execution.getVariable(VariableNames.VAR_TASK_HISTORY);
-        if (o == null) {
-            o = new ArrayList<>();
-        }
-        return o;
-    }
-
-    private void saveTaskHistory(DelegateExecution execution, List<String> history) {
-        execution.setVariable(VariableNames.VAR_TASK_HISTORY, history);
-    }
 
 }

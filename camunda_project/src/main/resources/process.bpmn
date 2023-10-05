@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.7.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0">
   <bpmn:collaboration id="Collaboration_1jups4g">
     <bpmn:participant id="Participant_06miy0e" name="Centro" processRef="medical_admission" />
   </bpmn:collaboration>
-  <bpmn:process id="medical_admission" name="Medical admission" isExecutable="true">
+  <bpmn:process id="medical_admission" name="Medical admission" isExecutable="true" camunda:versionTag="1.0.0">
     <bpmn:laneSet id="LaneSet_1yzf0ek">
       <bpmn:lane id="Lane_1yet6fy" name="Admisión">
-        <bpmn:flowNodeRef>ExclusiveGateway_0hq2srn</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0zdmd2e</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_0hq2srn</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>StartEvent_1ony7nz</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_1x4t5hu</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0isczl6" name="ATS">
         <bpmn:flowNodeRef>Task_1n0hs4h</bpmn:flowNodeRef>
@@ -23,20 +22,20 @@
         <bpmn:flowNodeRef>IntermediateThrowEvent_0unndr9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0fn68sx</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0d3p9cm</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_1vwf09e</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1a83sc1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1vwf09e</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_00z038z" name="Observación">
-        <bpmn:flowNodeRef>ExclusiveGateway_196n9oj</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>IntermediateThrowEvent_16exwt3</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_0l2b9mm</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateThrowEvent_01u40mi</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_0l2b9mm</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IntermediateThrowEvent_16exwt3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_196n9oj</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1rcfqzn" name="Paciente">
-        <bpmn:flowNodeRef>IntermediateThrowEvent_1hldc23</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>IntermediateThrowEvent_0h90bda</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_0y7psr3</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_1se6kbn</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_0y7psr3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IntermediateThrowEvent_0h90bda</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IntermediateThrowEvent_1hldc23</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:sequenceFlow id="SequenceFlow_0911tgg" sourceRef="Task_0y7psr3" targetRef="EndEvent_1se6kbn" />
@@ -82,7 +81,7 @@
       <bpmn:incoming>SequenceFlow_15iqtxt</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0qvofyc</bpmn:outgoing>
       <bpmn:timerEventDefinition>
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">${observationTimer}</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT3M</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_0h90bda" name="Acceso a observación">
@@ -176,10 +175,10 @@
       <bpmn:incoming>SequenceFlow_016kefg</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_049x6sd</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Task_1ixa0np" name="Comprobar habitaciones disponibles">
+    <bpmn:serviceTask id="Task_1ixa0np" name="Comprobar habitaciones disponibles" camunda:exclusive="false">
       <bpmn:extensionElements>
-        <camunda:executionListener class="org.us.etsii.camunda_iot.CheckRoomsListenerStart" event="start" />
-        <camunda:executionListener class="org.us.etsii.camunda_iot.CheckRoomsListenerEnd" event="end" />
+        <camunda:executionListener class="org.us.etsii.camunda.CheckRoomsListenerStart" event="start" />
+        <camunda:executionListener class="org.us.etsii.camunda.CheckRoomsListenerEnd" event="end" />
         <camunda:connector>
           <camunda:inputOutput>
             <camunda:inputParameter name="url">${url}</camunda:inputParameter>
@@ -232,6 +231,11 @@
       <bpmn:incoming>SequenceFlow_1yxiutc</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1mys5gq</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:businessRuleTask id="Task_1a83sc1" name="Resultado de evaluación" camunda:resultVariable="evaluationResult" camunda:decisionRef="evaluation" camunda:mapDecisionResult="singleEntry">
+      <bpmn:incoming>SequenceFlow_068pgar</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_17b9wj5</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="Flow_0mm89mt" sourceRef="StartEvent_1ony7nz" targetRef="ExclusiveGateway_0zdmd2e" />
     <bpmn:userTask id="Task_1vwf09e" name="Evaluación" camunda:candidateGroups="evaluation">
       <bpmn:extensionElements>
         <camunda:formData>
@@ -257,13 +261,8 @@
       <bpmn:incoming>SequenceFlow_06xql6y</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_068pgar</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:businessRuleTask id="Task_1a83sc1" name="Resultado de evaluación" camunda:resultVariable="evaluationResult" camunda:decisionRef="evaluation" camunda:mapDecisionResult="singleEntry">
-      <bpmn:incoming>SequenceFlow_068pgar</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_17b9wj5</bpmn:outgoing>
-    </bpmn:businessRuleTask>
-    <bpmn:startEvent id="StartEvent_1ony7nz" name="Comienzo del proceso">
+    <bpmn:startEvent id="StartEvent_1ony7nz" name="Comienzo del proceso" camunda:formRef="" camunda:formRefBinding="latest">
       <bpmn:extensionElements>
-        <camunda:executionListener class="org.us.etsii.camunda_iot.SetInitialCamundaVariables" event="start" />
         <camunda:formData>
           <camunda:formField id="patientFirstname" label="Nombre" type="string">
             <camunda:validation>
@@ -298,48 +297,6 @@
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0mm89mt</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="Task_1x4t5hu" name="Admisión" camunda:candidateGroups="admission">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="patientFirstname" label="Nombre" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="patientLastname" label="Apellidos" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="patientPersonalId" label="DNI" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-              <camunda:constraint name="minlength" config="9" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="patientSocialSecurityId" label="Nº Seguridad Social" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-              <camunda:constraint name="minlength" config="12" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="patientDescription" label="Descripción" type="string" />
-          <camunda:formField id="mobilityAssistance" label="Requiere asistencia de movilidad" type="boolean" />
-          <camunda:formField id="patientPhone" label="Teléfono" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="beaconUuid" label="Identificador beacon" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-              <camunda:constraint name="minlength" config="17" />
-            </camunda:validation>
-          </camunda:formField>
-        </camunda:formData>
-      </bpmn:extensionElements>
-    </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_0mm89mt" sourceRef="StartEvent_1ony7nz" targetRef="ExclusiveGateway_0zdmd2e" />
   </bpmn:process>
   <bpmn:signal id="Signal_1xuxwk3" name="accessEvaluation_signal" />
   <bpmn:signal id="Signal_0w7x5v1" name="accessObservation_signal" />
@@ -347,25 +304,25 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1jups4g">
       <bpmndi:BPMNShape id="Participant_06miy0e_di" bpmnElement="Participant_06miy0e" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="1790" height="900" />
+        <dc:Bounds x="130" y="80" width="1820" height="900" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1rcfqzn_di" bpmnElement="Lane_1rcfqzn" isHorizontal="true">
-        <dc:Bounds x="190" y="80" width="1760" height="172" />
+        <dc:Bounds x="160" y="80" width="1790" height="172" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_00z038z_di" bpmnElement="Lane_00z038z" isHorizontal="true">
-        <dc:Bounds x="190" y="252" width="1760" height="188" />
+        <dc:Bounds x="160" y="252" width="1790" height="188" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0nqbmh0_di" bpmnElement="Lane_0nqbmh0" isHorizontal="true">
-        <dc:Bounds x="190" y="440" width="1760" height="240" />
+        <dc:Bounds x="160" y="440" width="1790" height="240" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0isczl6_di" bpmnElement="Lane_0isczl6" isHorizontal="true">
-        <dc:Bounds x="190" y="840" width="1760" height="140" />
+        <dc:Bounds x="160" y="840" width="1790" height="140" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1yet6fy_di" bpmnElement="Lane_1yet6fy" isHorizontal="true">
-        <dc:Bounds x="190" y="680" width="1760" height="160" />
+        <dc:Bounds x="160" y="680" width="1790" height="160" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0mm89mt_di" bpmnElement="Flow_0mm89mt">
-        <di:waypoint x="278" y="750" />
+        <di:waypoint x="248" y="750" />
         <di:waypoint x="465" y="750" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_049x6sd_di" bpmnElement="SequenceFlow_049x6sd">
@@ -574,20 +531,17 @@
       <bpmndi:BPMNShape id="UserTask_1tgn5sm_di" bpmnElement="Task_0d3p9cm">
         <dc:Bounds x="1490" y="520" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_1bws3zc_di" bpmnElement="Task_1vwf09e">
-        <dc:Bounds x="750" y="520" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BusinessRuleTask_12jw3x6_di" bpmnElement="Task_1a83sc1">
         <dc:Bounds x="920" y="520" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="StartEvent_1ony7nz_di" bpmnElement="StartEvent_1ony7nz">
-        <dc:Bounds x="242" y="732" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="227" y="775" width="68" height="27" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="UserTask_1bws3zc_di" bpmnElement="Task_1vwf09e">
+        <dc:Bounds x="750" y="520" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_12vp7a9_di" bpmnElement="Task_1x4t5hu">
-        <dc:Bounds x="760" y="710" width="100" height="80" />
+      <bpmndi:BPMNShape id="StartEvent_1ony7nz_di" bpmnElement="StartEvent_1ony7nz">
+        <dc:Bounds x="212" y="732" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="197" y="775" width="68" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

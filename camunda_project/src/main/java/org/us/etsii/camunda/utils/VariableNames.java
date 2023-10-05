@@ -1,4 +1,4 @@
-package util;
+package org.us.etsii.camunda.utils;
 
 public class VariableNames {
 

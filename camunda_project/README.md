@@ -97,11 +97,11 @@ Built and tested against Camunda BPM version 7.11.0.
 
 <!-- HTML snippet for index page
   <tr>
-    <td><img src="snippets/camunda_iot/src/main/resources/process.png" width="100"></td>
-    <td><a href="snippets/camunda_iot">Camunda BPM Process Application</a></td>
+    <td><img src="snippets/camunda_project/src/main/resources/process.png" width="100"></td>
+    <td><a href="snippets/camunda_project">Camunda BPM Process Application</a></td>
     <td>A Process Application for [Camunda BPM](http://docs.camunda.org).</td>
   </tr>
 -->
 <!-- Tweet
-New @Camunda example: Camunda BPM Process Application - A Process Application for [Camunda BPM](http://docs.camunda.org). https://github.com/camunda-consulting/code/tree/master/snippets/camunda_iot
+New @Camunda example: Camunda BPM Process Application - A Process Application for [Camunda BPM](http://docs.camunda.org). https://github.com/camunda-consulting/code/tree/master/snippets/camunda_project
 -->

@@ -7,12 +7,11 @@
  * KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-package org.us.etsii.camunda_iot;
+package org.us.etsii.camunda;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.us.etsii.bpm.engine.delegate.CustomJavaDelegate;
-import util.Utils;
-import util.VariableNames;
+import org.us.etsii.camunda.utils.Utils;
+import org.us.etsii.camunda.utils.VariableNames;
 
 public class CheckRoomsListenerStart extends CustomJavaDelegate {
 
